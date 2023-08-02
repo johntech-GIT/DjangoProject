@@ -151,4 +151,4 @@
 # pip install django-allauth
 # pip install django-filter==21.1
 
-#  test2user@mail.com     rtrytfjygkghkukbkkb
+#  test2user@mail.com     rtrytfjygkghkukbkkb  'hkvoviwxgujovrsc'
