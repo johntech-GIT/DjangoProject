@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 
 class CreatePost(forms.ModelForm):
+    category = forms.CharField(max_length=255)
     title = forms.CharField(max_length=255)
     content = forms.Textarea()
 

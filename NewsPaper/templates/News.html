@@ -20,15 +20,20 @@ News
     {% if Post %}
         <table>
             <tr>
-                <td>Заголовок</td>
                 <td>Опубликовано</td>
+                <td>Категория</td>
+                <td>Заголовок</td>
                 <td>Превью</td>
             </tr>
             {% for post in Post %}
             <tr>
-               <td>{{ post.title|censor }}</td>
                 <td>{{ post.time_create|date:'M d Y' }}</td>
-               <td>{{ post.content|truncatechars:100|censor }}</td>
+                <td>{% for category in post.cat.all %}
+                    <a href="{% url 'category_list' category.id %}">{{ category }}</a>
+                {% endfor %}</td>
+<!--                {{ post.cat }}-->
+                <td>{{ post.title|censor }}</td>
+                <td>{{ post.content|truncatechars:100|censor }}</td>
             </tr>
            {% endfor %}
         </table>

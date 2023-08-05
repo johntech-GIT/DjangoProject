@@ -150,5 +150,8 @@
 # pip install django
 # pip install django-allauth
 # pip install django-filter==21.1
+# pip install django-apscheduler
 
 #  test2user@mail.com     rtrytfjygkghkukbkkb  'hkvoviwxgujovrsc'
+#  test3user@mail.com     ododdodhjkij444
+# teaexpansion78@gmail.com  treveler78

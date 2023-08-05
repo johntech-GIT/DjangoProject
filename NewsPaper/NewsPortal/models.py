@@ -44,6 +44,8 @@ class PostCategory(models.Model):
     post = models.ForeignKey('Post', null=True, on_delete=models.SET_NULL)  # id статьи/новости
     cat = models.ForeignKey(Category, on_delete=models.PROTECT)  # id категории
 
+    def __str__(self):
+        return self.cat.name
 
 class Post(models.Model):
     POSITIONS = [
@@ -55,7 +57,7 @@ class Post(models.Model):
                                    choices=POSITIONS,
                                    default='Art')
     time_create = models.DateTimeField(auto_now_add=True)  # дата и время создания статьи/новости
-    cat = models.ManyToManyField(Category, through=PostCategory)  # id категории статьи/новости
+    cat = models.ManyToManyField(Category, through=PostCategory)  # cat имеет связь с Category через PostCategory
     title = models.CharField(max_length=255)  # заголовок статьи/новости
     content = models.TextField(blank=True)  # содержание статьи/новости
     _rating = models.IntegerField(default=0, db_column='rating')  # рейтинг статьи/новости
