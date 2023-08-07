@@ -8,7 +8,7 @@ News
 {% block content %}
     <h1>Все Публикации</h1>
     {% if is_not_subscriber %}
-        <p class="text-center"><a href="{}" class="btn btn-secondary btn-sm">Подписаться</a> </p>
+        <p class="text-center"><a href="{% url 'subscribe' category.id %}" class="btn btn-secondary btn-sm">Подписаться</a> </p>
     {% endif %}
 
 <!--{# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}-->
@@ -20,12 +20,14 @@ News
 <!--   </form>-->
 
     <hr>
-    {% if Post %}
+
+    {% if category_news_list %}
         <table>
             <tr>
-                <td>Заголовок</td>
-                <td>Опубликовано</td>
                 <td>Категория</td>
+                <td>Дата</td>
+                <td>Заголовок</td>
+                <td>Автор</td>
                 <td>Превью</td>
             </tr>
             {% for post in category_news_list %}

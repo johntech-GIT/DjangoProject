@@ -20,7 +20,7 @@ News
     {% if Post %}
         <table>
             <tr>
-                <td>Опубликовано</td>
+                <td>Дата</td>
                 <td>Категория</td>
                 <td>Заголовок</td>
                 <td>Превью</td>
@@ -29,11 +29,12 @@ News
             <tr>
                 <td>{{ post.time_create|date:'M d Y' }}</td>
                 <td>{% for category in post.cat.all %}
-                    <a href="{% url 'category_list' category.id %}">{{ category }}</a>
-                {% endfor %}</td>
+                        <a href="{% url 'category_list' category.id %}">{{ category }}</a>
+                    {% endfor %}</td>
 <!--                {{ post.cat }}-->
                 <td>{{ post.title|censor }}</td>
                 <td>{{ post.content|truncatechars:100|censor }}</td>
+
             </tr>
            {% endfor %}
         </table>
