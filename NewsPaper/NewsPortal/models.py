@@ -33,7 +33,7 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)  # название категории
-    subscribers = models.ManyToManyField(User, related_name="categories") # поле subscribers имеет связь ManyToMany
+    subscribers = models.ManyToManyField(User, related_name="categories", blank=True) # поле subscribers имеет связь ManyToMany
     # к модели юзер через алиас categories пример: user.categories.all()
 
     def __str__(self):
