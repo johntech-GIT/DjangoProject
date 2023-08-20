@@ -18,6 +18,7 @@ urlpatterns = [
     path('profile_update/', ProfileUpdateView.as_view(), name='profile_update'),
     path('categories/<int:pk>', CategoryListView.as_view(), name='category_list'),
     path('categories/<int:pk>/subscribe', subscribe, name='subscribe'),
+    path('categories/<int:pk>/unsubscribe', unsubscribe, name='unsubscribe'),
 
 ]
 
