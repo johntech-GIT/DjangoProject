@@ -12,7 +12,7 @@ def get_subscriber(category): # функция для создания спис�
 def new_post_subscription(instance): # функция для отправки почтового сообщения принимает экземпляр класса post
     template = 'mail/new_post.html'  # указываем шаблон
 
-    for category in instance.category.all(): # итерируемся по всем категориям в instance
+    for category in instance.category.all(): # итерируемся по всем категориям в instance (экземпляре класса post)
         email_subject = f'New post in category: "{category}"'  # тема сообщения для рассылки
         user_emails = get_subscriber(category) # вызываем get_subscriber() для сбора имейлов подписчиков
 

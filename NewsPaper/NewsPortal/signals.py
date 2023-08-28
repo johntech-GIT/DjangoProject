@@ -13,7 +13,7 @@ def notify_subscribers(sender, instаnce, **kwargs):
         new_post_subscription(instаnce)
 
 @receiver(post_save, sender=User,)
-def notify_subscribers(sender, instаnce, **kwargs):
+def notify_user_signup(sender, instаnce, **kwargs):
     if kwargs['action'] == 'post_add':
         pass
         new_post_subscription(instаnce)
