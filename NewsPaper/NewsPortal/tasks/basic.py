@@ -1,6 +1,8 @@
 from django.template.loader import render_to_string
 from django.core.mail.message import EmailMultiAlternatives
 from django.conf import settings
+from NewsPaper import PassW
+
 
 def get_subscriber(category): # функция для создания списка имейлов пользователей подписанных на конкретную категорию
     user_email = [] # создаем пустой список
@@ -26,7 +28,7 @@ def new_post_subscription(instance): # функция для отправки п
     msg = EmailMultiAlternatives(  # создаем полное сообщение, куда вписываем:
         subject=email_subject, # тему
         body='',  # само сообщение
-        from_email=PassWords[0],  # с какого адреса рассылка
+        from_email=PassW[0],  # с какого адреса рассылка
         to=user_emails  # на какие адреса разослать (список)
     )
 
