@@ -6,8 +6,8 @@ from django.db import transaction
 from .forms import CreatePost, UserUpdateForm
 from .filters import PostFilter
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.models import User, Group
-from django.shortcuts import redirect, get_object_or_404, render, reverse
+from django.contrib.auth.models import User#, Group
+from django.shortcuts import get_object_or_404, render#, redirect, reverse
 
 
 
@@ -135,36 +135,36 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('profile_update')
 
-class CategoryListView(ListView):
-    model = Post
-    template_name = 'category_list.html'
-    context_object_name = 'category_news_list'
+class CategoryListView(ListView):  # вьюха для просмотра списка категорий
+    model = Post # на основе модели Post
+    template_name = 'category_list.html' # указываем шаблон
+    context_object_name = 'category_news_list' # обзываем контекст
 
-    def get_queryset(self):
-        self.category = get_object_or_404(Category, id=self.kwargs['pk'])
-        queryset = Post.objects.filter(cat=self.category,).order_by('-time_create')
-        return queryset
+    def get_queryset(self): # функция переопределения кверисета
+        self.category = get_object_or_404(Category, id=self.kwargs['pk']) #
+        queryset = Post.objects.filter(cat=self.category,).order_by('-time_create') #
+        return queryset #
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['is_not_subsсriber'] = self.request.user not in self.category.subscribers.all()
-        context['category'] = self.category
-        return context
-
-@login_required
-def subscribe(request, pk):
-    user = request.user
-    category = Category.objects.get(id=pk)
-    category.subscribers.add(user)
-
-    message = 'Вы успешно подписались на рассылку новостей категории'
-    return render(request, 'subscribe.html', {'category': category, 'message': message})
+    def get_context_data(self, **kwargs): #
+        context = super().get_context_data(**kwargs) #
+        context['is_not_subsсriber'] = self.request.user not in self.category.subscribers.all() #
+        context['category'] = self.category #
+        return context #
 
 @login_required
-def unsubscribe(request, pk):
-    user = request.user
-    category = Category.objects.get(id=pk)
-    category.subscribers.remove(user)
+def subscribe(request, pk): # функция подписки на категорию
+    user = request.user # получаем юзера с которым ведем сессию
+    category = Category.objects.get(id=pk) # получаем id категории
+    category.subscribers.add(user) # в промежуточной таблице (category.subscribers) создаем строку category_id user_id
 
-    message = 'Вы успешно отписались от рассылки новостей категории'
-    return render(request, 'unsubscribe.html', {'category': category, 'message': message})
+    message = 'Вы успешно подписались на рассылку новостей категории' # создаем сообщение
+    return render(request, 'subscribe.html', {'category': category, 'message': message}) # выводим соообщение
+
+@login_required
+def unsubscribe(request, pk): # функция отписки на категорию
+    user = request.user # получаем юзера с которым ведем сессию
+    category = Category.objects.get(id=pk) # получаем id категории
+    category.subscribers.remove(user) # из промежуточной таблицы (category.subscribers) удаляем строку category_id user_id
+
+    message = 'Вы успешно отписались от рассылки новостей категории' # создаем сообщение
+    return render(request, 'unsubscribe.html', {'category': category, 'message': message}) # выводим соообщение
