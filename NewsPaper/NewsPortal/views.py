@@ -135,15 +135,18 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('profile_update')
 
-class CategoryListView(ListView):  # вьюха для просмотра списка категорий
+class CategoryListView(ListView):  # вьюха для просмотра всех постов выбраной категории
     model = Post # на основе модели Post
     template_name = 'category_list.html' # указываем шаблон
     context_object_name = 'category_news_list' # обзываем контекст
+    #ordering = '-time_create'
+    paginate_by = 10
 
     def get_queryset(self): # функция переопределения кверисета
-        self.category = get_object_or_404(Category, id=self.kwargs['pk']) #
-        queryset = Post.objects.filter(cat=self.category,).order_by('-time_create') #
-        return queryset #
+        self.category = get_object_or_404(Category, id=self.kwargs['pk']) # получаем выбранную категорию
+        queryset = Post.objects.filter(cat=self.category,).order_by('-time_create') # получаем все посты выбранной категории
+        # упорядочиваем по дате создания и записываем в переменную queryset
+        return queryset # возвращаем queryset
 
     def get_context_data(self, **kwargs): #
         context = super().get_context_data(**kwargs) #
@@ -154,7 +157,7 @@ class CategoryListView(ListView):  # вьюха для просмотра спи
 @login_required
 def subscribe(request, pk): # функция подписки на категорию
     user = request.user # получаем юзера с которым ведем сессию
-    category = Category.objects.get(id=pk) # получаем id категории
+    category = Category.objects.get(id=pk) # получаем id выбранной категории
     category.subscribers.add(user) # в промежуточной таблице (category.subscribers) создаем строку category_id user_id
 
     message = 'Вы успешно подписались на рассылку новостей категории' # создаем сообщение

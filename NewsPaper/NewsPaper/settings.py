@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
-from PassW import PassWords
+from PassW import *
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -165,7 +165,7 @@ STATICFILES_DIRS = [
 
 EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
 EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
-EMAIL_HOST_USER = PassWords[0]  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
-EMAIL_HOST_PASSWORD = PassWords[1]  # пароль от почты
+EMAIL_HOST_USER = 'tea-expansion'#PassWords[0]  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
+EMAIL_HOST_PASSWORD = 'xtjqwtjoltckwbic'#PassWords[1]  # пароль от почты
 EMAIL_USE_SSL = True
 
