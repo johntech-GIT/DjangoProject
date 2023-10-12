@@ -1,7 +1,6 @@
 from django.template.loader import render_to_string
 from django.core.mail.message import EmailMultiAlternatives
-from django.conf import settings
-from NewsPaper import PassW
+from NewsPaper.NewsPaper import PassW
 
 
 def get_subscriber(category): # функция для создания списка имейлов пользователей подписанных на конкретную категорию

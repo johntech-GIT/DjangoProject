@@ -10,6 +10,7 @@ from django.contrib.auth.models import User#, Group
 from django.shortcuts import get_object_or_404, render#, redirect, reverse
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from NewsPaper.NewsPaper.PassW import PassWords
 
 
 class NewsList(ListView):
@@ -161,17 +162,16 @@ def subscribe(request, pk): # функция подписки на катего�
     useremail = user.email
     category = Category.objects.get(id=pk) # получаем id выбранной категории
     category.subscribers.add(user) # в промежуточной таблице (category.subscribers) создаем строку category_id user_id
-
     message = 'Вы успешно подписались на рассылку новостей категории' # создаем сообщение
-
 
     msg = EmailMultiAlternatives(
         subject=f'{category} subscription',
         body='',
-        from_email='tea-expansion@yandex.ru',
-        to=[useremail,],
+        from_email=PassWords[0],
+        to=[useremail],
     )
     msg.attach_alternative()
+
     return render(request, 'subscribe.html', {'category': category, 'message': message}) # выводим соообщение
 #41:30
 
