@@ -15,7 +15,7 @@ urlpatterns = [
     path('articles/<int:pk>/edit/', ArticlesEdit.as_view(), name='articles_edit'),
     path('articles/<int:pk>/delete/', ArticlesDelete.as_view(), name='articles_delete'),
 
-    path('profile_update/', ProfileUpdateView.as_view(), name='profile_update'),
+    path('profile_update/', ProfileUpdate_View.as_view(), name='profile_update'),
     path('categories/<int:pk>', CategoryListView.as_view(), name='category_list'),
     path('categories/<int:pk>/subscribe', subscribe, name='subscribe'),
     path('categories/<int:pk>/unsubscribe', unsubscribe, name='unsubscribe'),

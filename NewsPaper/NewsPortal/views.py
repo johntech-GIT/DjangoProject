@@ -7,10 +7,12 @@ from .forms import CreatePost, UserUpdateForm
 from .filters import PostFilter
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User#, Group
-from django.shortcuts import get_object_or_404, render#, redirect, reverse
+from django.shortcuts import get_object_or_404, render, redirect, reverse
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from NewsPaper.NewsPaper.PassW import PassWords
+import os
+Password = os.getenv("Password")
+Mail = os.getenv("Mail")
 
 
 class NewsList(ListView):
@@ -101,7 +103,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
 
-class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+class ProfileUpdate_View(LoginRequiredMixin, UpdateView):
     """
     Представление для редактирования профиля
     """
@@ -132,7 +134,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
             else:
                 context.update({'user_form': user_form})
                 return self.render_to_response(context)
-        return super(ProfileUpdateView, self).form_valid(form)
+        return super(ProfileUpdate_View, self).form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('profile_update')
@@ -141,7 +143,7 @@ class CategoryListView(ListView):  # вьюха для просмотра все
     model = Post # на основе модели Post
     template_name = 'category_list.html' # указываем шаблон
     context_object_name = 'category_news_list' # обзываем контекст
-    #ordering = '-time_create'
+    ordering = '-time_create'
     paginate_by = 10
 
     def get_queryset(self): # функция переопределения кверисета
@@ -156,23 +158,40 @@ class CategoryListView(ListView):  # вьюха для просмотра все
         context['category'] = self.category #
         return context #
 
-@login_required
+#@login_required
 def subscribe(request, pk): # функция подписки на категорию
     user = request.user # получаем юзера с которым ведем сессию
+    category = Category.objects.get(id=pk)  # получаем id выбранной категории
     useremail = user.email
-    category = Category.objects.get(id=pk) # получаем id выбранной категории
-    category.subscribers.add(user) # в промежуточной таблице (category.subscribers) создаем строку category_id user_id
-    message = 'Вы успешно подписались на рассылку новостей категории' # создаем сообщение
+    message = 'Вы успешно подписались на рассылку новостей категории'  # создаем сообщение
 
-    msg = EmailMultiAlternatives(
+    if not category.subscribers.filter(id=user.id).exsists():
+        category.subscribers.add(user) # в промежуточной таблице (category.subscribers) создаем строку category_id user_id
+        html = render_to_string(
+            'mail/subscribed.html',
+            {'category': category,
+             'user': user,
+            }
+        )
+
+        msg = EmailMultiAlternatives(
         subject=f'{category} subscription',
         body='',
-        from_email=PassWords[0],
+        from_email=Mail,
         to=[useremail],
-    )
-    msg.attach_alternative()
+        )
+        msg.attach_alternative(html, 'text/html')
 
+        try:
+            msg.send()
+        except Exception as e:
+            print(e)
+        return redirect('news')
+    #return redirect(request.META.get('HTTP_REFERER'))
     return render(request, 'subscribe.html', {'category': category, 'message': message}) # выводим соообщение
+
+
+
 #41:30
 
 @login_required

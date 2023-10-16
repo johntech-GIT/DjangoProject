@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
-#from NewsPaper.NewsPaper.PassW import PassWords
+Password = os.getenv("Password")
+Mail = os.getenv("Mail")
 
 
 
@@ -170,7 +171,7 @@ STATICFILES_DIRS = [
 
 EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
 EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
-#EMAIL_HOST_USER = PassWords[0]  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
-#EMAIL_HOST_PASSWORD = PassWords[1]  # пароль от почты
+EMAIL_HOST_USER = Password  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
+EMAIL_HOST_PASSWORD = Mail  # пароль от почты
 EMAIL_USE_SSL = True
-#SERVER_EMAIL = PassWords[0]  # это будет у нас вместо аргумента FROM в массовой рассылке
+SERVER_EMAIL = Password  # это будет у нас вместо аргумента FROM в массовой рассылке
