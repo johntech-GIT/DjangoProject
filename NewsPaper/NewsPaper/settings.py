@@ -175,3 +175,9 @@ EMAIL_HOST_USER = Password  # ваше имя пользователя, напр
 EMAIL_HOST_PASSWORD = Mail  # пароль от почты
 EMAIL_USE_SSL = True
 SERVER_EMAIL = Password  # это будет у нас вместо аргумента FROM в массовой рассылке
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+print(Mail)
+print(Password)

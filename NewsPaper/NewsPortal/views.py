@@ -158,35 +158,41 @@ class CategoryListView(ListView):  # вьюха для просмотра все
         context['category'] = self.category #
         return context #
 
-#@login_required
+@login_required
 def subscribe(request, pk): # функция подписки на категорию
     user = request.user # получаем юзера с которым ведем сессию
     category = Category.objects.get(id=pk)  # получаем id выбранной категории
     useremail = user.email
     message = 'Вы успешно подписались на рассылку новостей категории'  # создаем сообщение
+    usersubs = category.subscribers.filter(id=user.id)#.exsists():
+    #usersubs = usersubs[id]
 
-    if not category.subscribers.filter(id=user.id).exsists():
-        category.subscribers.add(user) # в промежуточной таблице (category.subscribers) создаем строку category_id user_id
-        html = render_to_string(
-            'mail/subscribed.html',
-            {'category': category,
-             'user': user,
-            }
-        )
+    #if not category.subscribers.filter(id=user.id).exsists():
 
-        msg = EmailMultiAlternatives(
-        subject=f'{category} subscription',
-        body='',
-        from_email=Mail,
-        to=[useremail],
-        )
-        msg.attach_alternative(html, 'text/html')
+    category.subscribers.add(user) # в промежуточной таблице (category.subscribers) создаем строку category_id user_id
+    html = render_to_string(
+        'mail/subscribed.html',
+        {'category': category,
+            'user': user,
+        }
+    )
 
-        try:
-            msg.send()
-        except Exception as e:
-            print(e)
-        return redirect('news')
+    msg = EmailMultiAlternatives(
+    subject=f'{category} subscription',
+    body='',
+    from_email=Mail,
+    to=[useremail,],
+    )
+    msg.attach_alternative(html, 'text/html')
+
+    try:
+        msg.send()
+    except Exception as e:
+        print(e)
+    #return redirect('news_list')
+    print(useremail)
+    print(Mail)
+    print(Password)
     #return redirect(request.META.get('HTTP_REFERER'))
     return render(request, 'subscribe.html', {'category': category, 'message': message}) # выводим соообщение
 
