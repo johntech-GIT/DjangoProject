@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404, render, redirect, reverse
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 import os
+#from config import Password, Mail
 Password = os.getenv("Password")
 Mail = os.getenv("Mail")
 

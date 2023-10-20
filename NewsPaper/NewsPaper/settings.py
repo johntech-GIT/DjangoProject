@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import sys
 import os
 from pathlib import Path
+from config import Password, Mail
 
 Password = os.getenv("Password")
 Mail = os.getenv("Mail")
@@ -54,10 +55,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'sendmailapp',
+
 ]
 
-DEFAULT_FROM_EMAIL = 'tea-expansion@yandex.ru'
+DEFAULT_FROM_EMAIL = Mail
 
 SITE_ID = 1
 
@@ -171,13 +172,15 @@ STATICFILES_DIRS = [
 
 EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
 EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
-EMAIL_HOST_USER = Password  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
-EMAIL_HOST_PASSWORD = Mail  # пароль от почты
+EMAIL_HOST_USER = Mail  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
+EMAIL_HOST_PASSWORD = Password   # пароль от почты
 EMAIL_USE_SSL = True
-SERVER_EMAIL = Password  # это будет у нас вместо аргумента FROM в массовой рассылке
+SERVER_EMAIL = Mail  # это будет у нас вместо аргумента FROM в массовой рассылке
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-print(Mail)
-print(Password)
+print(f"{Mail} settings")
+print(f"{Password} settings")
