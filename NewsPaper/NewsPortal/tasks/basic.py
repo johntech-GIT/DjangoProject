@@ -17,19 +17,19 @@ def new_post_subscription(instance): # функция для отправки п
         email_subject = f'New post in category: "{category}"'  # тема сообщения для рассылки
         user_emails = get_subscriber(category) # вызываем get_subscriber() для сбора имейлов подписчиков
 
-    html = render_to_string(   # создаем содержимое сообщения вызывая render_to_string()
-        template_name=template, # вписываем шаблон
-        context={               # вписываем содержимое
-            'category': category, # категорию
-            'post' : instance,    # и саму публикацию
-        }
-    )
-    msg = EmailMultiAlternatives(  # создаем полное сообщение, куда вписываем:
-        subject=email_subject, # тему
-        body='',  # само сообщение
-        from_email=Mail,  # с какого адреса рассылка
-        to=user_emails  # на какие адреса разослать (список)
-    )
+        html = render_to_string(   # создаем содержимое сообщения вызывая render_to_string()
+            template_name=template, # вписываем шаблон
+            context={               # вписываем содержимое
+                'category': category, # категорию
+                'post' : instance,    # и саму публикацию
+            }
+        )
+        msg = EmailMultiAlternatives(  # создаем полное сообщение, куда вписываем:
+            subject=email_subject, # тему
+            body='',  # само сообщение
+            from_email=Mail,  # с какого адреса рассылка
+            to=user_emails  # на какие адреса разослать (список)
+        )
 
-    msg.attach_alternative(html, 'text/html')  # указываем в каком виде разослать
-    msg.send()  # рассылаем
+        msg.attach_alternative(html, 'text/html')  # указываем в каком виде разослать
+        msg.send()  # рассылаем

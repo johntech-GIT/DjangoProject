@@ -16,6 +16,7 @@ from config import Password, Mail
 
 Password = os.getenv("Password")
 Mail = os.getenv("Mail")
+FMail = os.getenv("FMail")
 
 
 
@@ -58,7 +59,7 @@ INSTALLED_APPS = [
 
 ]
 
-DEFAULT_FROM_EMAIL = Mail
+DEFAULT_FROM_EMAIL = FMail
 
 SITE_ID = 1
 
@@ -177,9 +178,11 @@ EMAIL_HOST_PASSWORD = Password   # пароль от почты
 EMAIL_USE_SSL = True
 
 
+
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 print(f"{Mail} settings")
+print(f"{FMail} settings")
 print(f"{Password} settings")
