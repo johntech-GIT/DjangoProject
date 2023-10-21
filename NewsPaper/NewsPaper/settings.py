@@ -175,12 +175,11 @@ EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
 EMAIL_HOST_USER = Mail  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
 EMAIL_HOST_PASSWORD = Password   # пароль от почты
 EMAIL_USE_SSL = True
-SERVER_EMAIL = Mail  # это будет у нас вместо аргумента FROM в массовой рассылке
+
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_BACEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 print(f"{Mail} settings")
 print(f"{Password} settings")

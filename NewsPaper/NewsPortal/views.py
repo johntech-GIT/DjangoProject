@@ -14,6 +14,7 @@ import os
 #from config import Password, Mail
 Password = os.getenv("Password")
 Mail = os.getenv("Mail")
+FMail = os.getenv("FMail")
 
 
 class NewsList(ListView):
@@ -21,7 +22,7 @@ class NewsList(ListView):
     ordering = '-time_create'
     template_name = 'News.html'
     context_object_name = 'Post'
-    paginate_by = 5
+    #paginate_by = 5
 
 
 class NewsDetail(LoginRequiredMixin, DetailView):
@@ -181,7 +182,7 @@ def subscribe(request, pk): # функция подписки на катего�
     msg = EmailMultiAlternatives(
     subject=f'{category} subscription',
     body='',
-    from_email=Mail,
+    from_email=FMail,
     to=[useremail,],
     )
     msg.attach_alternative(html, 'text/html')
