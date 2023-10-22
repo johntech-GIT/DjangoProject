@@ -14,6 +14,7 @@ class CreatePost(forms.ModelForm):
         fields = [
             'title',
             'content',
+            'cat',
             'author',
             ]
         widgets = {
