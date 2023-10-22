@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404, render, redirect, reverse
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 import os
-#from config import Password, Mail
+
 Password = os.getenv("Password")
 Mail = os.getenv("Mail")
 FMail = os.getenv("FMail")
@@ -52,6 +52,7 @@ class NewsCreate(PermissionRequiredMixin,CreateView):
     form_class = CreatePost
     model = Post
     template_name = 'post_create.html'
+    permission_required = ('NewsPortal.add_post',)
 
     def form_valid(self, form):
         Post = form.save(commit=False)
@@ -60,38 +61,52 @@ class NewsCreate(PermissionRequiredMixin,CreateView):
         Post.save()
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_not_author'] = not self.request.user.groups.filter(name='authors').exists()
+        return context
+
 
 class NewsEdit(PermissionRequiredMixin,UpdateView):
     form_class = CreatePost
     model = Post
     template_name = 'post_edit.html'
+    permission_required = ('NewsPortal.change_post',)
 
 
-class NewsDelete(DeleteView):
+class NewsDelete(PermissionRequiredMixin,DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('news_list')
+    permission_required = ('NewsPortal.delete_post',)
 
 
 class ArticlesCreate(PermissionRequiredMixin, CreateView):
     form_class = CreatePost
     model = Post
     template_name = 'post_create.html'
+    permission_required = ('NewsPortal.add_post',)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_not_author'] = not self.request.user.groups.filter(name='authors').exists()
+        return context
 
 class ArticlesEdit(PermissionRequiredMixin, UpdateView):
     form_class = CreatePost
     model = Post
     template_name = 'post_edit.html'
+    permission_required = ('NewsPortal.change_post',)
 
 
-class ArticlesDelete(DeleteView):
+class ArticlesDelete(PermissionRequiredMixin,DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('news_list')
+    permission_required = ('NewsPortal.delete_post',)
 
 
-class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+class ProfileUpdateView(UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = 'profile_update.html'
@@ -105,7 +120,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
 
-class ProfileUpdate_View(LoginRequiredMixin, UpdateView):
+class ProfileUpdate_View(UpdateView):# LoginRequiredMixin,
     """
     Представление для редактирования профиля
     """

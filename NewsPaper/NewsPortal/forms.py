@@ -1,6 +1,7 @@
 from django import forms
 from .models import Post
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 
 class CreatePost(forms.ModelForm):
@@ -13,11 +14,20 @@ class CreatePost(forms.ModelForm):
         fields = [
             'title',
             'content',
-                    ]
+            'author',
+            ]
         widgets = {
             'content': forms.Textarea(attrs={'cols': 120, 'rows': 10}),
         }
 
+    def clean(self):
+        cleaned_data = super().clean()
+        text = cleaned_data.get("text")
+        title = cleaned_data.get("title")
+        if title == text:
+            raise ValidationError("Содержание не должно быть идентично названию.")
+
+        return cleaned_data
 
 class UserUpdateForm(forms.ModelForm):
     """
