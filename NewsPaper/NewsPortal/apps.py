@@ -7,5 +7,4 @@ class NewsportalConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'NewsPortal'
     def ready(self):
-        pass
-        #import signals
+         import NewsPortal.signals

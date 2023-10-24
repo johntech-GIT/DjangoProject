@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from config import Password, Mail
 
+
 Password = os.getenv("Password")
 Mail = os.getenv("Mail")
 FMail = os.getenv("FMail")
@@ -45,9 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'NewsPortal.apps.NewsportalConfig',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'NewsPortal',
+    #'NewsPortal',
     'fpages',
     'django_filters',
     'sign',
