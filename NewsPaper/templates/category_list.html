@@ -7,10 +7,12 @@ News
 {% endblock title %}
 {% block content %}
     <h1>Все Публикации</h1>
-    {% if is_not_subsсriber %}
-        <p class="text-center"><a href="{% url 'subscribe' category.id %}" class="btn btn-secondary btn-sm">Подписаться</a> </p>
-    {%  else %}
-        <p class="text-center"><a href="{% url 'unsubscribe' category.id %}" class="btn btn-secondary btn-sm">Отписаться</a> </p>
+    {% if request.user.is_authenticated %}
+        {% if is_not_subsсriber %}
+            <p class="text-center"><a href="{% url 'subscribe' category.id %}" class="btn btn-secondary btn-sm">Подписаться</a> </p>
+        {%  else %}
+            <p class="text-center"><a href="{% url 'unsubscribe' category.id %}" class="btn btn-secondary btn-sm">Отписаться</a> </p>
+        {% endif %}
     {% endif %}
 
     <hr>
@@ -30,7 +32,9 @@ News
                     <a href="{% url 'category_list' category.id %}">{{ category }}</a>
                 {% endfor %}</td>
                 <td>{{ post.time_create|date:'M d Y' }}</td>
-                <td>{{ post.title|censor }}</td>
+                <td>
+                    <a href="{% url 'news_detail' post.id %}">{{ post.title|censor }}</a>
+                </td>
                 <td>{{ post.author }}</td>
                 <td>{{ post.content|truncatechars:100|censor }}</td>
             </tr>

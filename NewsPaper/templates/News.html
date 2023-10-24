@@ -32,8 +32,7 @@ News
                         <a href="{% url 'category_list' category.id %}">{{ category }}</a>
                     {% endfor %}</td>
                 <td>
-                    <a href="{% url 'news_detail' post.id %}">{{ post.title|censor }}
-                    </a>
+                    <a href="{% url 'news_detail' post.id %}">{{ post.title|censor }}</a>
                 </td>
                 <td>{{ post.content|truncatechars:100|censor }}</td>
 

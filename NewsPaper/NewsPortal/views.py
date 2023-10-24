@@ -25,7 +25,7 @@ class NewsList(ListView):
     #paginate_by = 5
 
 
-class NewsDetail(LoginRequiredMixin, DetailView):
+class NewsDetail( DetailView):
     model = Post
     template_name = 'NewsDet.html'
     context_object_name = 'new1'

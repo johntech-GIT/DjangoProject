@@ -5,10 +5,10 @@
 New
 {% endblock title %}
 {% block content %}
+<h4>{{ new1.author.user.username }}</h4>
 <h4>{% for category in new1.cat.all %}
                         <a href="{% url 'category_list' category.id %}">{{ category }}</a>
                     {% endfor %}</h4>
-<h4>{{ new1.author.user.username }}</h4>
 <h4>{{ new1.time_create|date:'d M Y' }}</h4>
 <h1>{{ new1.title|censor }}</h1>
     <hr>

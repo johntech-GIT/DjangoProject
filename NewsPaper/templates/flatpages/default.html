@@ -23,9 +23,11 @@
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/">Home</a></li>
                         <!--<li class="nav-item"><a class="nav-link" href="#">Link</a></li>-->
                         <li class="nav-item"><a class="nav-link" href="{% url 'news_list' %}">News</a></li>
+                        {% if request.user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'news_create' %}">New create</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'articles_create' %}">Article create</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'profile_update' %}">My profile</a></li>
+                        {% endif %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
