@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 
 
 class CreatePost(forms.ModelForm):
-    category = forms.CharField(max_length=255)
+    #category = forms.CharField(max_length=255)
     title = forms.CharField(max_length=255)
     content = forms.Textarea()
 
@@ -14,7 +14,7 @@ class CreatePost(forms.ModelForm):
         fields = [
             'title',
             'content',
-            'category',
+            'cat',
             'author',
             ]
         widgets = {

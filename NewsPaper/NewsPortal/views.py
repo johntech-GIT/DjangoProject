@@ -182,9 +182,6 @@ def subscribe(request, pk): # функция подписки на катего�
     useremail = user.email
     message = 'Вы успешно подписались на рассылку новостей категории'  # создаем сообщение
     usersubs = category.subscribers.filter(id=user.id)#.exsists():
-    #usersubs = usersubs[id]
-
-    #if not category.subscribers.filter(id=user.id).exsists():
 
     category.subscribers.add(user) # в промежуточной таблице (category.subscribers) создаем строку category_id user_id
     html = render_to_string(
