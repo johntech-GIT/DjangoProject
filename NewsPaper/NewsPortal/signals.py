@@ -2,15 +2,15 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
 from django.core.mail import mail_managers
-from .models import PostCategory
+from .models import Post
 from .tasks import new_post_subscription
 
 
-# @receiver(m2m_changed, sender=PostCategory,)
-# def notify_subscribers(sender, instance, **kwargs):
-#     if kwargs['action'] == 'post_add':
-#         pass
-#         new_post_subscription(instаnce)
+@receiver(m2m_changed, sender=Post,)
+def notify_subscribers(sender, instance, created, **kwargs):
+    if kwargs['action'] == 'post_add':
+        pass
+        new_post_subscription(instаnce)
 #
 # @receiver(post_save, sender=User,)
 # def notify_user_signup(sender, instаnce, **kwargs):
