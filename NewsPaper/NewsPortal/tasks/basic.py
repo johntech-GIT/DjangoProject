@@ -4,13 +4,13 @@ import os
 Password = os.getenv("Password")
 Mail = os.getenv("Mail")
 
-def get_subscriber(category):
+def get_subscriber(category): # функция для сбора имейлов подписчиков
     user_email =[]
     for user in category.subscribers.all():
         user_email.append(user.email)
     return user_email
 
-def new_post_subscription(instance): # функция для отправки почтового сообщения принимает экземпляр класса post
+def new_post_subscription(instance): # функция для отправки почтового сообщения принимает новую публикацию (экземпляр класса post)
     template = 'mail/new_post.html'  # указываем шаблон
 
     for category in instance.category.all(): # итерируемся по всем категориям в instance (экземпляре класса post)

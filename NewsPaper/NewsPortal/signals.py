@@ -6,8 +6,8 @@ from .models import Post
 from .tasks import new_post_subscription
 
 
-@receiver(m2m_changed, sender=Post,)
-def notify_subscribers(sender, instance, created, **kwargs):
+@receiver(m2m_changed, sender=Post.cat.throught)
+def notify_subscribers(sender, created, instаnce, **kwargs):
     if kwargs['action'] == 'post_add':
         pass
         new_post_subscription(instаnce)
