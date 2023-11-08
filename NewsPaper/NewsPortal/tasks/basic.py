@@ -5,10 +5,11 @@ Password = os.getenv("Password")
 Mail = os.getenv("Mail")
 
 def get_subscriber(category): # функция для сбора имейлов подписчиков
-    user_email =[]
+    user_emails =[]
     for user in category.subscribers.all():
-        user_email.append(user.email)
-    return user_email
+        user_emails.append(user.email)
+        print(f'отправляем на следующие почты -{user_emails}')
+    return user_emails
 
 def new_post_subscription(instance): # функция для отправки почтового сообщения принимает новую публикацию (экземпляр класса post)
     template = 'mail/new_post.html'  # указываем шаблон

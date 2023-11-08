@@ -181,8 +181,8 @@ EMAIL_USE_SSL = True
 
 
 
-# if DEBUG:
-#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 print(f"{Mail} settings")
